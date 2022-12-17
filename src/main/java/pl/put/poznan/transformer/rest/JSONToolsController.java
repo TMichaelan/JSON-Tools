@@ -9,9 +9,9 @@ import java.util.Arrays;
 
 @RestController
 @RequestMapping("/{text}")
-public class TextTransformerController {
+public class JSONToolsController {
 
-    private static final Logger logger = LoggerFactory.getLogger(TextTransformerController.class);
+    private static final Logger logger = LoggerFactory.getLogger(JSONToolsController.class);
 
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     public String get(@PathVariable String text,
