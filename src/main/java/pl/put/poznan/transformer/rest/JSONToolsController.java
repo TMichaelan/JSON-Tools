@@ -35,10 +35,6 @@ public class JSONToolsController {
             return ResponseEntity.status(400).body("{\"error\":\"Payload is not valid JSON!\"}");
         }
 
-        if(jsonNode.size() != 1){
-            return ResponseEntity.status(400).body("{\"error\":\"Request body should contain only 'json' property!\"}");
-        }
-
         try{
             return ResponseEntity.status(200).body(tool.decorate(new JSONObject(jsonNode.toString())).getJson());
         }catch(Exception exception){
