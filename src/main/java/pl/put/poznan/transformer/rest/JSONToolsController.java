@@ -1,46 +1,51 @@
 package pl.put.poznan.transformer.rest;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.put.poznan.transformer.logic.TextTransformer;
+import pl.put.poznan.transformer.logic.domain.JSONException;
+import pl.put.poznan.transformer.logic.domain.JSONObject;
+import pl.put.poznan.transformer.logic.tools.MinifyTool;
 
-import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
+import static pl.put.poznan.transformer.logic.tools.JsonParser.*;
 
 @RestController
-@RequestMapping("/{text}")
+@CrossOrigin
+@RequestMapping("/api/v1/")
 public class JSONToolsController {
-
     private static final Logger logger = LoggerFactory.getLogger(JSONToolsController.class);
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public String get(@PathVariable String text,
-                              @RequestParam(value="transforms", defaultValue="upper,escape") String[] transforms) {
+    @RequestMapping(value="minify", method = { RequestMethod.POST }, produces = "application/json")
+    public ResponseEntity<String> minify(
+            @RequestBody String payload
+    ) {
+        final MinifyTool tool = new MinifyTool();
 
-        // log the parameters
-        logger.debug(text);
-        logger.debug(Arrays.toString(transforms));
+        logger.info("POST /api/v1/minify");
+        JsonNode jsonNode;
 
-        // perform the transformation, you should run your logic here, below is just a silly example
-        TextTransformer transformer = new TextTransformer(transforms);
-        return transformer.transform(text);
+        try{
+            jsonNode = parse(payload);
+        }catch(JSONException exception){
+            return ResponseEntity.status(400).body("{\"error\":\"Payload is not valid JSON!\"}");
+        }
+
+        if(jsonNode.size() != 1){
+            return ResponseEntity.status(400).body("{\"error\":\"Request body should contain only 'json' property!\"}");
+        }
+
+        try{
+            return ResponseEntity.status(200).body(tool.decorate(new JSONObject(jsonNode.toString())).getJson());
+        }catch(Exception exception){
+            logger.error(exception.toString());
+            return ResponseEntity.status(500).body("{\"error\":\"Internal error!\"}");
+        }
     }
-
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public String post(@PathVariable String text,
-                      @RequestBody String[] transforms) {
-
-        // log the parameters
-        logger.debug(text);
-        logger.debug(Arrays.toString(transforms));
-
-        // perform the transformation, you should run your logic here, below is just a silly example
-        TextTransformer transformer = new TextTransformer(transforms);
-        return transformer.transform(text);
-    }
-
-
-
 }
 
 
