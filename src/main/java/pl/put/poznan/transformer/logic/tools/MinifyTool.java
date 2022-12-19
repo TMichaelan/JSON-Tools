@@ -6,7 +6,9 @@ import pl.put.poznan.transformer.logic.domain.JSONException;
 import pl.put.poznan.transformer.logic.domain.JSONObject;
 
 import static pl.put.poznan.transformer.logic.tools.JsonParser.parse;
-
+/**
+ * The type Json tool Minify.
+ */
 public class MinifyTool extends DecoratorTool {
     private static final Logger logger = LoggerFactory.getLogger(MinifyTool.class);
     public MinifyTool() {
