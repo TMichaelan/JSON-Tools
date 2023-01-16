@@ -23,4 +23,20 @@ public class JsonParser {
         }
         throw new JSONException("Invalid JSON - input is not object");
     }
+
+    static public String[] getTexts(JsonNode json) throws JSONException {
+        String[] texts = new String[2];
+        try {
+            JsonNode jsonText1 = json.get("text1");
+            if (!jsonText1.isTextual()) throw new JSONException("Invalid JSON - key 'text1' is not a text");
+            texts[0] = jsonText1.asText();
+
+            JsonNode jsonText2 = json.get("text2");
+            if (!jsonText2.isTextual()) throw new JSONException("Invalid JSON - key 'text2' is not a text");
+            texts[1] = jsonText2.asText();
+            return texts;
+        } catch (Exception exception) {
+            throw new JSONException("Invalid JSON" + exception.getMessage());
+        }
+    }
 }
