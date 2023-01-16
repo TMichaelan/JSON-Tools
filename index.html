@@ -40,11 +40,11 @@
     window.addEventListener("load", function () {
       const button = document.getElementById("send");
       button.addEventListener("click", function () {
-        button.disabled = true;
+        // button.disabled = true;
         const xhttp = new XMLHttpRequest();
         xhttp.onload = function () {
           document.getElementById("output").value = this.responseText;
-          button.disabled = false;
+          // button.disabled = false;
         };
         const api_url = document.getElementById("api_url").value;
 
