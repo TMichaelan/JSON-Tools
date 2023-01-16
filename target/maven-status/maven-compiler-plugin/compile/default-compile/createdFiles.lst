@@ -1,0 +1,12 @@
+pl\put\poznan\transformer\logic\domain\JSONException.class
+pl\put\poznan\transformer\logic\tools\JsonParser.class
+pl\put\poznan\transformer\logic\tools\FilterTool.class
+pl\put\poznan\transformer\logic\tools\IJsonTool.class
+pl\put\poznan\transformer\rest\JSONToolsController.class
+pl\put\poznan\transformer\logic\domain\JSONObject.class
+pl\put\poznan\transformer\logic\tools\MinifyTool.class
+pl\put\poznan\transformer\logic\tools\DecoratorTool.class
+pl\put\poznan\transformer\logic\tools\PrettifyTool.class
+pl\put\poznan\transformer\logic\JSONShowDIff.class
+pl\put\poznan\transformer\app\JSONToolsApplication.class
+pl\put\poznan\transformer\logic\TextTransformer.class

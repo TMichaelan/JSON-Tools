@@ -1,3 +1,12 @@
-/Users/mochodek/Documents/Dydaktyka/Wyklady/IO/Laboratory classes/projekt/ioprojectarchitecture/src/main/java/pl/put/poznan/transformer/app/TextTransformerApplication.java
-/Users/mochodek/Documents/Dydaktyka/Wyklady/IO/Laboratory classes/projekt/ioprojectarchitecture/src/main/java/pl/put/poznan/transformer/logic/TextTransformer.java
-/Users/mochodek/Documents/Dydaktyka/Wyklady/IO/Laboratory classes/projekt/ioprojectarchitecture/src/main/java/pl/put/poznan/transformer/rest/TextTransformerController.java
+C:\Users\michael\Desktop\Sem5\IO\IO-proj\JSON-Tools\src\main\java\pl\put\poznan\transformer\rest\JSONToolsController.java
+C:\Users\michael\Desktop\Sem5\IO\IO-proj\JSON-Tools\src\main\java\pl\put\poznan\transformer\logic\JSONShowDIff.java
+C:\Users\michael\Desktop\Sem5\IO\IO-proj\JSON-Tools\src\main\java\pl\put\poznan\transformer\logic\TextTransformer.java
+C:\Users\michael\Desktop\Sem5\IO\IO-proj\JSON-Tools\src\main\java\pl\put\poznan\transformer\logic\tools\FilterTool.java
+C:\Users\michael\Desktop\Sem5\IO\IO-proj\JSON-Tools\src\main\java\pl\put\poznan\transformer\logic\tools\PrettifyTool.java
+C:\Users\michael\Desktop\Sem5\IO\IO-proj\JSON-Tools\src\main\java\pl\put\poznan\transformer\logic\tools\DecoratorTool.java
+C:\Users\michael\Desktop\Sem5\IO\IO-proj\JSON-Tools\src\main\java\pl\put\poznan\transformer\logic\tools\JsonParser.java
+C:\Users\michael\Desktop\Sem5\IO\IO-proj\JSON-Tools\src\main\java\pl\put\poznan\transformer\logic\tools\IJsonTool.java
+C:\Users\michael\Desktop\Sem5\IO\IO-proj\JSON-Tools\src\main\java\pl\put\poznan\transformer\logic\domain\JSONException.java
+C:\Users\michael\Desktop\Sem5\IO\IO-proj\JSON-Tools\src\main\java\pl\put\poznan\transformer\app\JSONToolsApplication.java
+C:\Users\michael\Desktop\Sem5\IO\IO-proj\JSON-Tools\src\main\java\pl\put\poznan\transformer\logic\domain\JSONObject.java
+C:\Users\michael\Desktop\Sem5\IO\IO-proj\JSON-Tools\src\main\java\pl\put\poznan\transformer\logic\tools\MinifyTool.java
