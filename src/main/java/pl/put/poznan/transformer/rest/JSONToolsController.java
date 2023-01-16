@@ -9,6 +9,7 @@ import pl.put.poznan.transformer.logic.domain.JSONException;
 import pl.put.poznan.transformer.logic.domain.JSONObject;
 import pl.put.poznan.transformer.logic.tools.MinifyTool;
 import pl.put.poznan.transformer.logic.JSONShowDIff;
+import pl.put.poznan.transformer.logic.tools.PrettifyTool;
 
 import java.util.List;
 import java.util.Map;
@@ -42,6 +43,41 @@ public class JSONToolsController {
             logger.error(exception.toString());
             return ResponseEntity.status(500).body("{\"error\":\"Internal error!\"}");
         }
+    }
+
+    @RequestMapping(value="pretty", method = { RequestMethod.POST }, produces = "application/json")
+    public ResponseEntity<String> pretty(
+            @RequestBody String payload
+    ) {
+        final PrettifyTool tool = new PrettifyTool();
+
+        logger.info("POST /api/v1/pretty");
+        JsonNode jsonNode;
+
+        try{
+            jsonNode = parse(payload);
+        }catch(JSONException exception){
+            return ResponseEntity.status(400).body("{\"error\":\"Payload is not valid JSON!\"}");
+        }
+
+        if(jsonNode.size() != 1){
+            return ResponseEntity.status(400).body("{\"error\":\"Request body should contain only 'json' property!\"}");
+        }
+
+        JsonNode json;
+        try{
+            json = getInput(jsonNode);
+        }catch(JSONException exception){
+            return ResponseEntity.status(400).body("{\"error\":\"Missing or broken 'json' property!\"}");
+        }
+
+        try{
+            return ResponseEntity.status(200).body(tool.decorate(new JSONObject(json.toString())).getJson());
+        }catch(Exception exception){
+            logger.error(exception.toString());
+            return ResponseEntity.status(500).body("{\"error\":\"Internal error!\"}");
+        }
+
     }
 
     @RequestMapping(value="compare", method = { RequestMethod.POST }, produces = "application/json")
