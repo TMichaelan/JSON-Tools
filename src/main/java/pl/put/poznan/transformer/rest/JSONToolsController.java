@@ -114,6 +114,88 @@ public class JSONToolsController {
             return ResponseEntity.status(500).body("{\"error\":\"Internal error!\"}");
         }
     }
+
+    @RequestMapping(value="subset", method = { RequestMethod.POST }, produces = "application/json")
+    public ResponseEntity<String> subset(
+            @RequestBody String payload
+    ) {
+
+        logger.info("POST /api/v1/subset");
+        JsonNode jsonNode;
+
+        try{
+            jsonNode = parse(payload);
+        }catch(JSONException exception){
+            return ResponseEntity.status(400).body("{\"error\":\"Payload is not valid JSON!\"}");
+        }
+
+        if(jsonNode.size() != 2){
+            return ResponseEntity.status(400).body("{\"error\":\"Request body should contain only 'json' and 'keys' properties!\"}");
+        }
+
+        JsonNode json;
+        try{
+            json = getInput(jsonNode);
+        }catch(JSONException exception){
+            return ResponseEntity.status(400).body("{\"error\":\"Missing or broken 'json' property!\"}");
+        }
+
+        List<String> keys;
+        try{
+            keys = getKeys(jsonNode);
+        }catch (JSONException exception){
+            return ResponseEntity.status(400).body("{\"error\":\"Missing or broken 'keys' property!\"}");
+        }
+        final JSONToolWhitelist tool = new JSONToolWhitelist(keys.toArray(new String[0]));
+
+        try{
+            return ResponseEntity.status(200).body(tool.decorate(new JSONObject(json.toString())).getJson());
+        }catch(Exception exception){
+            logger.error(exception.toString());
+            return ResponseEntity.status(500).body("{\"error\":\"Internal error!\"}");
+        }
+    }
+
+    @RequestMapping(value="skip", method = { RequestMethod.POST }, produces = "application/json")
+    public ResponseEntity<String> skip(
+            @RequestBody String payload
+    ) {
+        logger.info("POST /api/v1/skip");
+        JsonNode jsonNode;
+
+        try{
+            jsonNode = parse(payload);
+        }catch(JSONException exception){
+            return ResponseEntity.status(400).body("{\"error\":\"Payload is not valid JSON!\"}");
+        }
+
+        if(jsonNode.size() != 2){
+            return ResponseEntity.status(400).body("{\"error\":\"Request body should contain only 'json' and 'keys' properties!\"}");
+        }
+
+        JsonNode json;
+        try{
+            json = getInput(jsonNode);
+        }catch(JSONException exception){
+            return ResponseEntity.status(400).body("{\"error\":\"Missing or broken 'json' property!\"}");
+        }
+
+        List<String> keys;
+        try{
+            keys = getKeys(jsonNode);
+        }catch (JSONException exception){
+            return ResponseEntity.status(400).body("{\"error\":\"Missing or broken 'keys' property!\"}");
+        }
+        final JSONToolBlacklist tool = new JSONToolBlacklist(keys.toArray(new String[0]));
+
+        try{
+            return ResponseEntity.status(200).body(tool.decorate(new JSONObject(json.toString())).getJson());
+        }catch(Exception exception){
+            logger.error(exception.toString());
+            return ResponseEntity.status(500).body("{\"error\":\"Internal error!\"}");
+        }
+    }
 }
+
 
 
