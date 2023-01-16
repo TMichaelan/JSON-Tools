@@ -8,7 +8,7 @@ import pl.put.poznan.transformer.logic.domain.JSONObject;
  * The type Json tool blacklist.
  */
 public class BlacklistTool extends FilterTool {
-    private static Logger logger = LoggerFactory.getLogger(JSONToolBlacklist.class);
+    private static Logger logger = LoggerFactory.getLogger(BlacklistTool.class);
 
     /**
      * Instantiates a new Json tool minify.
@@ -25,7 +25,7 @@ public class BlacklistTool extends FilterTool {
      * @param tool       the tool
      * @param filterList the filter list
      */
-    public BlacklistTool(IJSONTool tool, String[] filterList) {
+    public BlacklistTool(IJsonTool tool, String[] filterList) {
         super(tool, filterList);
     }
 
