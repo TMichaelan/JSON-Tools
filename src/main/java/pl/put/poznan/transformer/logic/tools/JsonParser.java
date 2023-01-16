@@ -4,6 +4,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import pl.put.poznan.transformer.logic.domain.JSONException;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class JsonParser {
     /**
      * Parse string into JsonNode object
@@ -41,6 +45,29 @@ public class JsonParser {
         throw new JSONException("Invalid JSON - input is not object");
     }
 
+    /**
+     * Extract 'json' param from JsonNode object
+     *
+     * @param json parsed JSON
+     * @return value of 'keys'
+     * @throws JSONException if json doesn't contain 'keys' property in proper format
+     */
+    static public List<String> getKeys(JsonNode json) throws JSONException {
+        try {
+            JsonNode keys = json.get("keys");
+            if (keys.isArray()) {
+                List<String> output = new ArrayList<>();
+                for (JsonNode key : keys) {
+                    if (!key.isTextual()) throw new JSONException("Invalid JSON - element of key 'keys' is not a text");
+                    output.add(key.asText());
+                }
+                return output;
+            }
+        } catch (Exception exception) {
+            throw new JSONException("Invalid JSON" + exception.getMessage());
+        }
+        throw new JSONException("Invalid JSON - key 'keys' is not array");
+    }
     static public String[] getTexts(JsonNode json) throws JSONException {
         String[] texts = new String[2];
         try {

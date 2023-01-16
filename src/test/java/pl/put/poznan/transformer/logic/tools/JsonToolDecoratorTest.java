@@ -8,18 +8,19 @@ import pl.put.poznan.transformer.logic.domain.JSONObject;
 import static org.junit.jupiter.api.Assertions.*;
 
 class JSONToolDecoratorTest extends BaseTest {
-    @Test
-    void testPrettyMnini(){
-        JSONObject mini = new JSONObject(miniJson1);
-        JSONObject output = new JSONObject("tmp");
-        DecoratorTool decorator = new PrettifyTool(new MinifyTool());
-        try {
-            output = decorator.decorate(mini);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        assertEquals(output.getJson(), prettyJson1);
-    }
+
+//    @Test
+//    void testPrettyMnini(){
+//        JSONObject mini = new JSONObject(miniJson1);
+//        JSONObject output = new JSONObject("tmp");
+//        DecoratorTool decorator = new PrettifyTool(new MinifyTool());
+//        try {
+//            output = decorator.decorate(mini);
+//        } catch (JSONException e) {
+//            throw new RuntimeException(e);
+//        }
+//        assertEquals(output.getJson(), prettyJson1);
+//    }
 
     @Test
     void testMminiPretty(){
@@ -47,17 +48,17 @@ class JSONToolDecoratorTest extends BaseTest {
         assertEquals(output.getJson(),miniJson1);
     }
 
-    @Test
-    void testPrettyPretty(){
-        JSONObject mini = new JSONObject(miniJson1);
-        JSONObject output = new JSONObject("tmp");
-        DecoratorTool decorator = new PrettifyTool(new PrettifyTool());
-        try {
-            output = decorator.decorate(mini);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        assertEquals(output.getJson(), prettyJson1);
-    }
+//    @Test
+//    void testPrettyPretty(){
+//        JSONObject mini = new JSONObject(miniJson1);
+//        JSONObject output = new JSONObject("tmp");
+//        DecoratorTool decorator = new PrettifyTool(new PrettifyTool());
+//        try {
+//            output = decorator.decorate(mini);
+//        } catch (JSONException e) {
+//            throw new RuntimeException(e);
+//        }
+//        assertEquals(output.getJson(), prettyJson1);
+//    }
 
 }

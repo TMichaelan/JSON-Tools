@@ -7,9 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.put.poznan.transformer.logic.domain.JSONException;
 import pl.put.poznan.transformer.logic.domain.JSONObject;
+import pl.put.poznan.transformer.logic.tools.BlacklistTool;
 import pl.put.poznan.transformer.logic.tools.MinifyTool;
 import pl.put.poznan.transformer.logic.JSONShowDIff;
 import pl.put.poznan.transformer.logic.tools.PrettifyTool;
+import pl.put.poznan.transformer.logic.tools.WhitelistTool;
 
 import java.util.List;
 import java.util.Map;
@@ -114,6 +116,88 @@ public class JSONToolsController {
             return ResponseEntity.status(500).body("{\"error\":\"Internal error!\"}");
         }
     }
+
+    @RequestMapping(value="whitelist", method = { RequestMethod.POST }, produces = "application/json")
+    public ResponseEntity<String> whitelist(
+            @RequestBody String payload
+    ) {
+
+        logger.info("POST /api/v1/whitelist");
+        JsonNode jsonNode;
+
+        try{
+            jsonNode = parse(payload);
+        }catch(JSONException exception){
+            return ResponseEntity.status(400).body("{\"error\":\"Payload is not valid JSON!\"}");
+        }
+
+        if(jsonNode.size() != 2){
+            return ResponseEntity.status(400).body("{\"error\":\"Request body should contain only 'json' and 'keys' properties!\"}");
+        }
+
+        JsonNode json;
+        try{
+            json = getInput(jsonNode);
+        }catch(JSONException exception){
+            return ResponseEntity.status(400).body("{\"error\":\"Missing or broken 'json' property!\"}");
+        }
+
+        List<String> keys;
+        try{
+            keys = getKeys(jsonNode);
+        }catch (JSONException exception){
+            return ResponseEntity.status(400).body("{\"error\":\"Missing or broken 'keys' property!\"}");
+        }
+        final WhitelistTool tool = new WhitelistTool(keys.toArray(new String[0]));
+
+        try{
+            return ResponseEntity.status(200).body(tool.decorate(new JSONObject(json.toString())).getJson());
+        }catch(Exception exception){
+            logger.error(exception.toString());
+            return ResponseEntity.status(500).body("{\"error\":\"Internal error!\"}");
+        }
+    }
+
+    @RequestMapping(value="blacklist", method = { RequestMethod.POST }, produces = "application/json")
+    public ResponseEntity<String> blacklist(
+            @RequestBody String payload
+    ) {
+        logger.info("POST /api/v1/blacklist");
+        JsonNode jsonNode;
+
+        try{
+            jsonNode = parse(payload);
+        }catch(JSONException exception){
+            return ResponseEntity.status(400).body("{\"error\":\"Payload is not valid JSON!\"}");
+        }
+
+        if(jsonNode.size() != 2){
+            return ResponseEntity.status(400).body("{\"error\":\"Request body should contain only 'json' and 'keys' properties!\"}");
+        }
+
+        JsonNode json;
+        try{
+            json = getInput(jsonNode);
+        }catch(JSONException exception){
+            return ResponseEntity.status(400).body("{\"error\":\"Missing or broken 'json' property!\"}");
+        }
+
+        List<String> keys;
+        try{
+            keys = getKeys(jsonNode);
+        }catch (JSONException exception){
+            return ResponseEntity.status(400).body("{\"error\":\"Missing or broken 'keys' property!\"}");
+        }
+        final BlacklistTool tool = new BlacklistTool(keys.toArray(new String[0]));
+
+        try{
+            return ResponseEntity.status(200).body(tool.decorate(new JSONObject(json.toString())).getJson());
+        }catch(Exception exception){
+            logger.error(exception.toString());
+            return ResponseEntity.status(500).body("{\"error\":\"Internal error!\"}");
+        }
+    }
 }
+
 
 
