@@ -7,9 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.put.poznan.transformer.logic.domain.JSONException;
 import pl.put.poznan.transformer.logic.domain.JSONObject;
+import pl.put.poznan.transformer.logic.tools.BlacklistTool;
 import pl.put.poznan.transformer.logic.tools.MinifyTool;
 import pl.put.poznan.transformer.logic.JSONShowDIff;
 import pl.put.poznan.transformer.logic.tools.PrettifyTool;
+import pl.put.poznan.transformer.logic.tools.WhitelistTool;
 
 import java.util.List;
 import java.util.Map;
@@ -115,12 +117,12 @@ public class JSONToolsController {
         }
     }
 
-    @RequestMapping(value="subset", method = { RequestMethod.POST }, produces = "application/json")
-    public ResponseEntity<String> subset(
+    @RequestMapping(value="whitelist", method = { RequestMethod.POST }, produces = "application/json")
+    public ResponseEntity<String> whitelist(
             @RequestBody String payload
     ) {
 
-        logger.info("POST /api/v1/subset");
+        logger.info("POST /api/v1/whitelist");
         JsonNode jsonNode;
 
         try{
@@ -146,7 +148,7 @@ public class JSONToolsController {
         }catch (JSONException exception){
             return ResponseEntity.status(400).body("{\"error\":\"Missing or broken 'keys' property!\"}");
         }
-        final JSONToolWhitelist tool = new JSONToolWhitelist(keys.toArray(new String[0]));
+        final WhitelistTool tool = new WhitelistTool(keys.toArray(new String[0]));
 
         try{
             return ResponseEntity.status(200).body(tool.decorate(new JSONObject(json.toString())).getJson());
@@ -156,11 +158,11 @@ public class JSONToolsController {
         }
     }
 
-    @RequestMapping(value="skip", method = { RequestMethod.POST }, produces = "application/json")
-    public ResponseEntity<String> skip(
+    @RequestMapping(value="blacklist", method = { RequestMethod.POST }, produces = "application/json")
+    public ResponseEntity<String> blacklist(
             @RequestBody String payload
     ) {
-        logger.info("POST /api/v1/skip");
+        logger.info("POST /api/v1/blacklist");
         JsonNode jsonNode;
 
         try{
@@ -186,7 +188,7 @@ public class JSONToolsController {
         }catch (JSONException exception){
             return ResponseEntity.status(400).body("{\"error\":\"Missing or broken 'keys' property!\"}");
         }
-        final JSONToolBlacklist tool = new JSONToolBlacklist(keys.toArray(new String[0]));
+        final BlacklistTool tool = new BlacklistTool(keys.toArray(new String[0]));
 
         try{
             return ResponseEntity.status(200).body(tool.decorate(new JSONObject(json.toString())).getJson());
