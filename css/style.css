@@ -45,6 +45,7 @@ button {
     text-transform: uppercase;
     transition: background-color 0.3s;
     width: 300px;
+    height: 40px;
     padding: 10px;
     margin-right: 2.5%;
     margin-left: 2.5%;
@@ -85,6 +86,7 @@ textarea::-webkit-scrollbar-thumb {
 
 select {
     width: 100px;
+    height: 40px;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
