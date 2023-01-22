@@ -1,4 +1,4 @@
-name: My Lib CI/CD
+name: Java Jar
 
 on:
   push:
