@@ -13,6 +13,7 @@
 
     <packaging>jar</packaging>
 
+        
     <groupId>pl.put.poznan</groupId>
     <artifactId>JsonTools</artifactId>
     <version>3.0</version>
@@ -46,6 +47,24 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/{your_github_org}/{your_github_repo_name}</url>
+        </repository>
+    </distributionManagement>
+
+    <dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+    </dependencyManagement>
 
 
     <build>
@@ -99,6 +118,5 @@
             <url>https://repo.spring.io/libs-release</url>
         </pluginRepository>
     </pluginRepositories>
-
 
 </project>
